@@ -9,3 +9,7 @@
 # Updating ToDo
 
 ![updating_item](https://github.com/saurav-2001/DMA-Comp-2/assets/116700223/399d37d0-9e65-42f7-a762-ee97442bb8b0)
+
+# Deleting ToDo
+
+![deleting_item](https://github.com/saurav-2001/DMA-Comp-2/assets/116700223/fbd2bcd4-2f55-4a32-a7d7-e8d836f396fe)
