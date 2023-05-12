@@ -5,3 +5,7 @@
 # Adding ToDo
 
 ![adding_item](https://github.com/saurav-2001/DMA-Comp-2/assets/116700223/b1fed0d0-d916-427f-b2af-13eb3c98f6d2)
+
+# Updating ToDo
+
+![updating_item](https://github.com/saurav-2001/DMA-Comp-2/assets/116700223/399d37d0-9e65-42f7-a762-ee97442bb8b0)
