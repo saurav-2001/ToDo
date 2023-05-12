@@ -7,6 +7,8 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class TodoViewModel extends AndroidViewModel {
 
@@ -42,4 +44,16 @@ public class TodoViewModel extends AndroidViewModel {
     public void deleteAll() {
         todoRepo.deleteAll();
     }
+
+    public void deleteCompleted() {
+        // Execute the deletion operation in a background thread
+        Executor executor = Executors.newSingleThreadExecutor();
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                todoRepo.deleteCompleted();
+            }
+        });
+    }
+
 }

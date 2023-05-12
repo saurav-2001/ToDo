@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,10 +21,11 @@ import com.example.todoapp.databinding.ActivityMainBinding;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements RVAdapter.OnCheckedChangeListener, RVAdapter.OnItemClickListener {
 
     private ActivityMainBinding binding;
     private TodoViewModel todoViewModel;
+    private RVAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,15 +44,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        adapter = new RVAdapter(todoViewModel, this, this);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         binding.recyclerView.setHasFixedSize(true);
-        RVAdapter adapter = new RVAdapter(todoViewModel, new RVAdapter.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChange(Todo todo, boolean isChecked) {
-                todoViewModel.setCompleted(todo.getId(), isChecked);
-            }
-        });
         binding.recyclerView.setAdapter(adapter);
 
         todoViewModel.getData().observe(this, new Observer<List<Todo>>() {
@@ -82,6 +78,15 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }).attachToRecyclerView(binding.recyclerView);
+
+        Button deleteButton = findViewById(R.id.button_delete_completed);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                todoViewModel.deleteCompleted();
+                Toast.makeText(MainActivity.this, "Completed ToDos Deleted", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -141,5 +146,19 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onCheckedChange(Todo todo, boolean isChecked) {
+        todoViewModel.setCompleted(todo.getId(), isChecked);
+    }
 
+    @Override
+    public void onItemClick(Todo todo) {
+        Intent intent = new Intent(MainActivity.this, InsertActivity.class);
+        intent.putExtra("type", "update");
+        intent.putExtra("title", todo.getTitle());
+        intent.putExtra("description", todo.getDescription());
+        intent.putExtra("date", todo.getDate());
+        intent.putExtra("id", todo.getId());
+        startActivityForResult(intent, 2);
+    }
 }

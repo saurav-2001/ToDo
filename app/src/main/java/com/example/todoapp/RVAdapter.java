@@ -16,11 +16,13 @@ public class RVAdapter extends ListAdapter<Todo, RVAdapter.ViewHolder> {
 
     private TodoViewModel todoViewModel;
     private OnCheckedChangeListener listener;
+    private OnItemClickListener itemClickListener;
 
-    public RVAdapter(TodoViewModel todoViewModel, OnCheckedChangeListener listener) {
+    public RVAdapter(TodoViewModel todoViewModel, OnCheckedChangeListener listener, OnItemClickListener itemClickListener) {
         super(CALLBACK);
         this.todoViewModel = todoViewModel;
         this.listener = listener;
+        this.itemClickListener = itemClickListener;
     }
 
     private static final DiffUtil.ItemCallback<Todo> CALLBACK = new DiffUtil.ItemCallback<Todo>() {
@@ -54,13 +56,14 @@ public class RVAdapter extends ListAdapter<Todo, RVAdapter.ViewHolder> {
         return getItem(position);
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements CompoundButton.OnCheckedChangeListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
         EachRvBinding binding;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             binding = EachRvBinding.bind(itemView);
             binding.checkBox.setOnCheckedChangeListener(this);
+            itemView.setOnClickListener(this);
         }
 
         public void bind(Todo todo) {
@@ -68,10 +71,8 @@ public class RVAdapter extends ListAdapter<Todo, RVAdapter.ViewHolder> {
             binding.description.setText(todo.getDescription());
             binding.date.setText(todo.getDate());
 
-            // Set the checked state of the checkbox based on the completion status of the Todo item
             binding.checkBox.setChecked(todo.isCompleted());
 
-            // Hide or show the checkbox based on the completion status of the Todo item
             if (todo.isCompleted()) {
                 binding.checkBox.setVisibility(View.VISIBLE);
             } else {
@@ -83,9 +84,17 @@ public class RVAdapter extends ListAdapter<Todo, RVAdapter.ViewHolder> {
         public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
             Todo todo = getItem(getAdapterPosition());
 
-            // Update the completion status of the corresponding Todo item
             if (listener != null) {
                 listener.onCheckedChange(todo, isChecked);
+            }
+        }
+
+        @Override
+        public void onClick(View view) {
+            int position = getAdapterPosition();
+            if (position != RecyclerView.NO_POSITION && itemClickListener != null) {
+                Todo todo = getItem(position);
+                itemClickListener.onItemClick(todo);
             }
         }
     }
@@ -101,5 +110,9 @@ public class RVAdapter extends ListAdapter<Todo, RVAdapter.ViewHolder> {
 
     public interface OnCheckedChangeListener {
         void onCheckedChange(Todo todo, boolean isChecked);
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(Todo todo);
     }
 }

@@ -29,5 +29,8 @@ public interface TodoDao {
     @Query("DELETE FROM my_todo")
     void deleteAll();
 
+    @Query("DELETE FROM my_todo WHERE completed = 1")
+    void deleteCompleted();
+
 
 }

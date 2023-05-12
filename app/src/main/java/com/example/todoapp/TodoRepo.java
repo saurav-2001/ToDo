@@ -6,7 +6,8 @@ import android.os.AsyncTask;
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
-
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 
 public class TodoRepo {
@@ -41,6 +42,17 @@ public class TodoRepo {
 
     public void deleteAll() {
         new DeleteAllTask(todoDao).execute();
+    }
+
+    public void deleteCompleted() {
+        // Execute the deletion operation in a background thread
+        Executor executor = Executors.newSingleThreadExecutor();
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                todoDao.deleteCompleted();
+            }
+        });
     }
 
     private static class InsertTask extends AsyncTask<Todo, Void, Void> {
