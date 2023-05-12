@@ -41,6 +41,7 @@ public class InsertActivity extends AppCompatActivity {
             binding.description.setText(getIntent().getStringExtra("description"));
             binding.dateChooserButton.setText(getIntent().getStringExtra("date"));
             int id = getIntent().getIntExtra("id", 0);
+            binding.newHeading.setText("Update ToDo");
             binding.add.setText("update");
         }
 
