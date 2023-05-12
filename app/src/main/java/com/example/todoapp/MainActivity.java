@@ -2,6 +2,8 @@ package com.example.todoapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -20,17 +22,16 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ActivityMainBinding binding; // Update the binding variable name
-
+    private ActivityMainBinding binding;
     private TodoViewModel todoViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMainBinding.inflate(getLayoutInflater()); // Inflate the layout using data binding
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        todoViewModel = new ViewModelProvider(this).get(TodoViewModel.class); // Simplify ViewModelProvider initialization
+        todoViewModel = new ViewModelProvider(this).get(TodoViewModel.class);
 
         binding.floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intent, 1);
             }
         });
+
 
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         binding.recyclerView.setHasFixedSize(true);
@@ -109,4 +111,27 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_add_item) {
+            // Handle Add Item option
+            Intent intent = new Intent(MainActivity.this, InsertActivity.class);
+            intent.putExtra("type", "addMode");
+            startActivityForResult(intent, 1);
+            return true;
+        } else if (itemId == R.id.action_delete_all) {
+            // Handle Delete All option
+            todoViewModel.deleteAll();
+            Toast.makeText(this, "All ToDos Deleted", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

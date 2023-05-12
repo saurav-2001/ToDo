@@ -10,25 +10,24 @@ import java.util.List;
 
 
 public class TodoRepo {
-
     private TodoDao todoDao;
     private LiveData<List<Todo>> todoList;
 
-    public TodoRepo(Application application){
+    public TodoRepo(Application application) {
         TodoDatabase todoDatabase = TodoDatabase.getInstance(application);
         todoDao = todoDatabase.todoDao();
         todoList = todoDao.getData();
     }
 
-    public void insertData(Todo todo){
+    public void insertData(Todo todo) {
         new InsertTask(todoDao).execute(todo);
     }
 
-    public void updateData(Todo todo){
+    public void updateData(Todo todo) {
         new UpdateTask(todoDao).execute(todo);
     }
 
-    public void deleteData(Todo todo){
+    public void deleteData(Todo todo) {
         new DeleteTask(todoDao).execute(todo);
     }
 
@@ -36,11 +35,15 @@ public class TodoRepo {
         new SetCompletedTask(todoDao).execute(todoId, completed);
     }
 
-    public LiveData<List<Todo>> getData(){
+    public LiveData<List<Todo>> getData() {
         return todoList;
     }
 
-    private static class InsertTask extends AsyncTask<Todo, Void, Void>{
+    public void deleteAll() {
+        new DeleteAllTask(todoDao).execute();
+    }
+
+    private static class InsertTask extends AsyncTask<Todo, Void, Void> {
         private TodoDao todoDao;
 
         public InsertTask(TodoDao todoDao) {
@@ -54,7 +57,7 @@ public class TodoRepo {
         }
     }
 
-    private static class UpdateTask extends AsyncTask<Todo, Void, Void>{
+    private static class UpdateTask extends AsyncTask<Todo, Void, Void> {
         private TodoDao todoDao;
 
         public UpdateTask(TodoDao todoDao) {
@@ -68,7 +71,7 @@ public class TodoRepo {
         }
     }
 
-    private static class DeleteTask extends AsyncTask<Todo, Void, Void>{
+    private static class DeleteTask extends AsyncTask<Todo, Void, Void> {
         private TodoDao todoDao;
 
         public DeleteTask(TodoDao todoDao) {
@@ -82,7 +85,7 @@ public class TodoRepo {
         }
     }
 
-    private static class SetCompletedTask extends AsyncTask<Object, Void, Void>{
+    private static class SetCompletedTask extends AsyncTask<Object, Void, Void> {
         private TodoDao todoDao;
 
         public SetCompletedTask(TodoDao todoDao) {
@@ -97,5 +100,18 @@ public class TodoRepo {
             return null;
         }
     }
-}
 
+    private static class DeleteAllTask extends AsyncTask<Void, Void, Void> {
+        private TodoDao todoDao;
+
+        public DeleteAllTask(TodoDao todoDao) {
+            this.todoDao = todoDao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            todoDao.deleteAll();
+            return null;
+        }
+    }
+}

@@ -26,4 +26,7 @@ public interface TodoDao {
     @Query("UPDATE my_todo SET completed = :completed WHERE id = :todoId")
     void setCompleted(int todoId, boolean completed);
 
+    @Query("DELETE FROM my_todo")
+    void deleteAll();
+
 }
