@@ -12,7 +12,7 @@
         android:theme="@style/Theme.ToDoApp"
         tools:targetApi="31">
         <activity
-            android:name=".InsertActivity"
+            android:name=".LoginActivity"
             android:exported="false" />
         <activity
             android:name=".SplashScreen"
@@ -28,6 +28,10 @@
             android:exported="true">
 
         </activity>
+
+        <activity
+            android:name=".InsertActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

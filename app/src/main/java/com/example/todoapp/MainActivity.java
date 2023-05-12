@@ -131,7 +131,15 @@ public class MainActivity extends AppCompatActivity {
             todoViewModel.deleteAll();
             Toast.makeText(this, "All ToDos Deleted", Toast.LENGTH_SHORT).show();
             return true;
+        } else if (itemId == R.id.action_logout) {
+            // Handle Logout option
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish(); // Optional: Close the MainActivity
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 }
