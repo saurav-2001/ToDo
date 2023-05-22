@@ -1,19 +1,20 @@
 # Splash Screen
 
-![image](https://github.com/saurav-2001/DMA-Comp-2/assets/116700223/181fbc49-417f-4208-8f31-ab0e8d717606)
+![splash_screen](https://github.com/saurav-2001/ToDo/assets/116700223/bc71afde-4514-463c-96f0-8f856c87ddef)
 
 # Sign Up and Log In
  
-![signup_and_login](https://github.com/saurav-2001/DMA-Comp-2/assets/116700223/2f145fa9-560e-441e-882d-39c0c76f6274)
+![signup_and_login](https://github.com/saurav-2001/ToDo/assets/116700223/d56ffdb4-12ea-4c56-873a-5e990fc60dc5)
 
 # Adding ToDo
 
-![adding_item](https://github.com/saurav-2001/DMA-Comp-2/assets/116700223/b1fed0d0-d916-427f-b2af-13eb3c98f6d2)
+![adding_item](https://github.com/saurav-2001/ToDo/assets/116700223/b1f435d7-b3c3-489a-9258-e97878d482ae)
 
 # Updating ToDo
 
-![updating_item](https://github.com/saurav-2001/DMA-Comp-2/assets/116700223/399d37d0-9e65-42f7-a762-ee97442bb8b0)
+![updating_item](https://github.com/saurav-2001/ToDo/assets/116700223/6397728c-fd0a-481a-bffe-6e84f5a767ac)
 
 # Deleting ToDo
 
-![deleting_item](https://github.com/saurav-2001/DMA-Comp-2/assets/116700223/fbd2bcd4-2f55-4a32-a7d7-e8d836f396fe)
+![deleting_item](https://github.com/saurav-2001/ToDo/assets/116700223/df281418-1a61-4672-ac0b-f2f841197bc1)
+
